@@ -1,0 +1,53 @@
+<div class="container py-4">
+    <h2 class="text-center">{{ isEdit ? 'Edit Sizes' : 'Add Sizes' }}</h2>
+
+    <form [formGroup]="sizeForm" class="mt-3">
+        <div formArrayName="sizeUpdates">
+            <div *ngFor="let sizeGroup of sizeUpdates.controls; let i = index" [formGroupName]="i"
+                class="card p-3 mb-3">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="colorId-{{i}}" class="form-label">Color</label>
+                        <select id="colorId-{{i}}" class="form-select" formControlName="colorId" required>
+                            <option *ngFor="let color of colors" [value]="color[0]">{{ color[1] }}</option>
+                        </select>
+                        <div *ngIf="sizeUpdates.at(i).get('colorId')?.hasError('required')" class="text-danger">
+                            Color is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="sizeId-{{i}}" class="form-label">Size</label>
+                        <select id="sizeId-{{i}}" class="form-select" formControlName="sizeId" required>
+                            <option *ngFor="let sizeOption of sizes" [value]="sizeOption[0]">{{ sizeOption[1] }}
+                            </option>
+                        </select>
+                        <div *ngIf="sizeUpdates.at(i).get('sizeId')?.hasError('required')" class="text-danger">
+                            Size is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="stockQuantity-{{i}}" class="form-label">Stock Quantity</label>
+                        <input id="stockQuantity-{{i}}" type="number" class="form-control"
+                            formControlName="stockQuantity" required>
+                        <div *ngIf="sizeUpdates.at(i).get('stockQuantity')?.hasError('required')" class="text-danger">
+                            Stock Quantity is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-3">
+                    <button class="btn btn-primary" (click)="addSizeFormGroup()" type="button">Add</button>
+                    <button class="btn btn-danger" (click)="removeSizeFormGroup(i)" type="button"
+                        [disabled]="sizeUpdates.length === 1">Remove</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="d-flex justify-content-end mt-4">
+        <button class="btn btn-secondary me-2" (click)="onNoClick()">Back</button>
+        <button class="btn btn-success" [disabled]="sizeForm.invalid" (click)="save()">Save</button>
+    </div>
+</div>

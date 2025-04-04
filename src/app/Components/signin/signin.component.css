@@ -1,0 +1,66 @@
+/* Sign In Container */
+.sign-in-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Sign In Box */
+.sign-in-box {
+    margin: 40px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 550px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-field {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #4e9e4e;
+    outline: none;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #e94141;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #ad2929;
+}

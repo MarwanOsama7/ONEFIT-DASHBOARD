@@ -1,0 +1,118 @@
+<div class="d-flex">
+    <!-- Sidebar -->
+    <nav id="modern-sidebar" class="bg-white text-dark vh-100 border-end border-2 border-light shadow-sm">
+        <div class="sidebar-header d-flex align-items-center justify-content-between p-3">
+            <img src="\assets\Images\19559.png" alt="Brand" class="brand-logo" width="100">
+            <!-- Adjust width as needed -->
+            <button class="btn btn-outline-dark btn-sm d-lg-none" (click)="toggleSidebar()">X</button>
+        </div>
+        <ul class="nav flex-column">
+            <!-- Dashboard -->
+            <li *ngIf="isLogin() || isLoginAdmins()" class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark" [routerLink]="['/dashboard']" routerLinkActive="active">
+                    <i class="bi bi-clipboard-data me-2"></i>Dashboard
+                </a>
+            </li>
+
+
+            <!-- Category -->
+            <li *ngIf="isLogin()" class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark" [routerLink]="['/category']" routerLinkActive="active">
+                    <i class="bi bi-info-circle me-2"></i> Category
+                </a>
+            </li>
+
+            <!-- Products -->
+            <li *ngIf="isLogin()" class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark" [routerLink]="['/product']" routerLinkActive="active">
+                    <i class="bi bi-cart me-2"></i>
+                    Products
+                </a>
+            </li>
+
+            <!-- Attributes -->
+            <li *ngIf="isLogin() || isLoginAdmins()" class="nav-item">
+                <a class="nav-link d-flex align-items-center justify-content-between text-dark"
+                    (click)="toggleSubmenu('attributes')">
+                    <div>
+                        <i class="bi bi-brush me-2"></i> Attributes
+                    </div>
+                    <!-- Arrow rotation -->
+                    <i class="bi" [class.bi-chevron-down]="!isSubmenuOpen['attributes']"
+                        [class.bi-chevron-up]="isSubmenuOpen['attributes']"></i>
+                </a>
+                <ul class="nav flex-column ps-4 submenu" [class.show]="isSubmenuOpen['attributes']">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" [routerLink]="['/attributescolor']" routerLinkActive="active">Colors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" [routerLink]="['/attributessize']" routerLinkActive="active">Sizes</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li *ngIf="isLogin()" class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark" [routerLink]="['/promocode']" routerLinkActive="active">
+                    <i class="bi bi-tag me-2"></i>
+                    Promo Code
+                </a>
+            </li>
+            
+            <li *ngIf="isLogin()" class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark" [routerLink]="['/shipping']" routerLinkActive="active">
+                    <i class="bi bi-cart me-2"></i>
+                    Shipping
+                </a>
+            </li>
+            <!-- Order with Submenu -->
+            <li *ngIf="isLogin() || isLoginAdmins()" class="nav-item">
+                <a class="nav-link d-flex align-items-center justify-content-between text-dark"
+                    (click)="toggleSubmenu('orders')">
+                    <div>
+                        <i class="bi bi-bag-check-fill me-2"></i> Orders
+                    </div>
+                    <!-- Arrow rotation -->
+                    <i class="bi" [class.bi-chevron-down]="!isSubmenuOpen['orders']"
+                        [class.bi-chevron-up]="isSubmenuOpen['orders']"></i>
+                </a>
+                <ul class="nav flex-column ps-4 submenu" [class.show]="isSubmenuOpen['orders']">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" [routerLink]="['/orders']" routerLinkActive="active">Orders Process</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" [routerLink]="['/completedorders']" routerLinkActive="active">Orders Completed</a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- Contact -->
+            <li *ngIf="isLogin()" class="nav-item">
+                <a class="nav-link d-flex align-items-center text-dark" href="#">
+                    <i class="bi bi-envelope me-2"></i> Manage Image
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content" class="flex-grow-1">
+        <!-- Header for Main Content -->
+        <div class="main-content-header d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
+            <!-- Toggle buttons for sidebar (open/close) -->
+            <button class="btn btn-outline-white btn-sm" (click)="toggleSidebar()">
+                <i class="bi" [class.bi-arrow-left]="!isCollapsed" [class.bi-arrow-right]="isCollapsed"></i>
+                {{ isCollapsed ? 'Open Sidebar' : 'Close Sidebar' }}
+            </button>
+            <button *ngIf="isLogin()" class="btn btn-outline-primary btn-sm btn-logout" (click)="logout()">
+                LOG OUT
+            </button>
+            <button *ngIf="!isLogin()" class="btn btn-outline-success btn-sm btn-login" [routerLink]="['/signin']">
+                LOG IN
+            </button>
+
+        </div>
+
+        <router-outlet></router-outlet>
+    </div>
+</div>

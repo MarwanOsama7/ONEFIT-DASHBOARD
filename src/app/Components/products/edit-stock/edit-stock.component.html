@@ -1,0 +1,38 @@
+<div class="container mt-4">
+    <h4 class="text-center mb-4">Manage Product Sizes</h4>
+    <form [formGroup]="productSizeForm">
+        <div formArrayName="sizes">
+            <div class="row mb-3 border-bottom pb-2" *ngFor="let size of sizes.controls; let i = index"
+                [formGroupName]="i">
+
+                <!-- Size -->
+                <div class="col-md-4">
+                    <label class="form-label">Size</label>
+                    <input type="text" class="form-control" formControlName="sizeValue">
+                </div>
+
+                <!-- Stock Quantity (Warning if stock is 0) -->
+                <div class="col-md-4">
+                    <label class="form-label">Stock</label>
+                    <input type="number" class="form-control"
+                        [ngClass]="{'border border-danger': sizes.at(i).get('stockQuantity')?.value === 0}"
+                        formControlName="stockQuantity">
+                    <div class="text-danger small mt-1" *ngIf="sizes.at(i).get('stockQuantity')?.value === 0">
+                        Warning: Out of Stock!
+                    </div>
+                </div>
+
+                <!-- Color -->
+                <div class="col-md-4">
+                    <label class="form-label">Color</label>
+                    <input type="text" class="form-control" formControlName="colorValue">
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="text-center mt-3">
+            <button type="button" class="btn btn-primary" (click)="onSave()">Save Changes</button>
+        </div>
+    </form>
+</div>

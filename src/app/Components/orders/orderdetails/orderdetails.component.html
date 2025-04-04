@@ -1,0 +1,79 @@
+<div *ngIf="order" class="container mt-5">
+    <!-- Order Card -->
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+        <!-- Header Section -->
+        <div class="card-header bg-dark text-white text-center py-3 rounded-3">
+            <h2 class="fw-bold mb-0">Order Details</h2>
+        </div>
+
+        <!-- Order Info -->
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                <div>
+                    <p class="mb-1"><strong class="text-muted">Name:</strong> {{ order.clientUsername }}</p>
+                    <p class="mb-1"><strong class="text-muted">Phone:</strong> {{ order.clientPhone }}</p>
+                    <p class="mb-1"><strong class="text-muted">Address:</strong> {{ order.clientAddress }}, {{
+                        order.clientcity }}</p>
+                </div>
+                <span class="badge fs-6 px-3 py-2" [ngClass]="{
+                'bg-warning': order.status === 0,
+                'bg-info text-white': order.status === -1,
+                'bg-success': order.status === 1,
+                'bg-danger': order.status === 2
+                }">
+                    Status:
+                    {{ order.status === 0 ? 'Pending'
+                    : order.status === -1 ? 'Processing'
+                    : order.status === 1 ? 'Completed'
+                    : order.status === 2 ? 'Returned'
+                    : 'Unknown' }}
+                </span>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="bg-light p-3 rounded-3 d-flex justify-content-between align-items-center shadow-sm">
+                <h5 class="mb-0 fw-bold text-dark">Total Price: {{ order.requestOrderTotalPrice }} EGP</h5>
+                <h6 class="mb-0 text-muted">Total Items: {{ order.requestOrderTotalQuantity }}</h6>
+            </div>
+
+            <!-- Items Section -->
+            <h3 class="mt-4 text-muted">Items</h3>
+            <div class="row mt-3">
+                <div *ngFor="let item of order.items" class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                        <img [src]="item.img" alt="Product Image" class="card-img-top img-fluid"
+                            style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="fw-bold">{{ item.name }}</h5>
+                            <p class="text-muted mb-1"><strong>Color:</strong> {{ item.colorName }}</p>
+                            <p class="text-muted mb-1"><strong>Size:</strong> {{ item.size }}</p>
+                            <p class="text-muted mb-1"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                            <p class="fw-bold text-primary"><strong>Price:</strong> {{ item.price }} EGP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Status Buttons -->
+            <div class="text-center mt-4 d-flex justify-content-center gap-3 flex-wrap">
+                <button class="btn btn-warning px-4 py-2 fw-bold shadow-sm rounded-3"
+                    (click)="updateStatus(order.id, 0)">
+                    <i class="bi bi-clock"></i> Pending
+                </button>
+                <button class="btn btn-info px-4 py-2 fw-bold shadow-sm rounded-3 text-white"
+                    (click)="updateStatus(order.id, -1)">
+                    <i class="bi bi-gear"></i> Processing
+                </button>
+                <button class="btn btn-success px-4 py-2 fw-bold shadow-sm rounded-3"
+                    (click)="updateStatus(order.id, 1)">
+                    <i class="bi bi-check-circle"></i> Completed
+                </button>
+                <button class="btn btn-danger px-4 py-2 fw-bold shadow-sm rounded-3"
+                    (click)="updateStatus(order.id, 2)">
+                    <i class="bi bi-arrow-return-left"></i> Returned
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="table-data" style="margin: 20px;">
+    <div class="order">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="font-weight-bold">Manage Categories</h1>
+            <button class="btn btn-gradient" (click)="openAddCategoryModal()">Add Category</button>
+        </div>
+
+        <table class="table table-bordered table-hover custom-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Types</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of categories?.content" [class.table-active]="selectedCategory === category"
+                    class="clickable-row">
+                    <td class="text-center">{{ category.name }}</td>
+                    <td class="text-center">
+                        <ul class="category-type-list">
+                            <li *ngFor="let type of category.categorytype" class="category-type-item">{{
+                                type.name }}</li>
+                        </ul>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-info btn-sm">Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="categoryForm">
+                    <div class="mb-3">
+                        <label for="categoryName" class="form-label">Category Name</label>
+                        <input type="text" id="categoryName" formControlName="name" class="form-control"
+                            placeholder="Enter category name" />
+                        <div *ngIf="categoryForm.controls['name'].invalid && categoryForm.controls['name'].touched"
+                            class="text-danger">
+                            Category name is required.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryTypes" class="form-label">Category Types</label>
+                        <div formArrayName="categorytype">
+                            <div *ngFor="let type of categoryTypes.controls; let i = index" class="d-flex align-items-center mb-2">
+                                <input type="text" [formControlName]="i" class="form-control me-2"
+                                    placeholder="Enter type name" />
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    (click)="removeCategoryType(i)">Remove</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm mt-2" (click)="addCategoryType()">Add
+                            Type</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" (click)="submitCategoryForm()" [disabled]="categoryForm.invalid">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

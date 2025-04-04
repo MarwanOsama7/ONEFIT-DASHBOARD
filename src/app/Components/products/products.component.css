@@ -1,0 +1,152 @@
+/* Rounded table with custom background and shadows */
+.custom-table {
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for rows */
+.clickable-row:hover {
+    cursor: pointer;
+    background-color: #f1f1f1;
+}
+
+/* Active row styling */
+.table-active {
+    background-color: #d1ecf1;
+}
+
+/* Add gradient button */
+.btn-gradient {
+    background: linear-gradient(135deg, #da6464, #ed2f2f);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 25px;
+    transition: background 0.3s ease;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(135deg, #ed2f2f, #f25656);
+    opacity: 0.8;
+}
+
+/* Table header styling */
+.thead-dark {
+    background-color: #333;
+    color: white;
+    text-align: center;
+}
+
+/* Button styling for Edit and Delete */
+.btn-sm {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 20px;
+}
+
+/* Optional: Add spacing to the action buttons */
+td.text-center button {
+    margin-right: 5px;
+}
+
+/* Title text styling */
+.font-weight-bold {
+    font-weight: 600;
+}
+
+
+.category-type-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-type-item {
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.pagination-black .page-item.active .page-link {
+    background-color: #000000;
+    color: white !important;
+    border-color: #000000;
+}
+
+.pagination-black .page-link {
+    color: black !important;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-black .page-link:hover {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.pagination-black .page-item.disabled .page-link {
+    background-color: #e9ecef;
+    color: #6c757d;
+    pointer-events: none;
+}
+
+
+/* Search */
+
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.search-input {
+    width: 500px;
+    padding: 12px 20px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+}
+
+.search-button {
+    position: absolute;
+    right: 5px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    .search-input {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .search-button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}

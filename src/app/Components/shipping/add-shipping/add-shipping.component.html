@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h4 class="text-center mb-3">🚚 Add Shipping Method</h4>
+
+        <form [formGroup]="shippingForm" (ngSubmit)="onSave()">
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Shipping Name</label>
+                <input type="text" id="name" class="form-control" formControlName="name"
+                    placeholder="Enter shipping name" />
+                <div class="text-danger small"
+                    *ngIf="shippingForm.get('name')?.invalid && shippingForm.get('name')?.touched">
+                    Name is required.
+                </div>
+            </div>
+
+            <!-- Number of Days -->
+            <div class="mb-3">
+                <label for="numberOfDay" class="form-label">Delivery Time (Days)</label>
+                <input type="number" id="numberOfDay" class="form-control" formControlName="numberOfDay"
+                    placeholder="Enter estimated delivery time" />
+                <div class="text-danger small"
+                    *ngIf="shippingForm.get('numberOfDay')?.invalid && shippingForm.get('numberOfDay')?.touched">
+                    Must be at least 1 day.
+                </div>
+            </div>
+
+            <!-- Price -->
+            <div class="mb-3">
+                <label for="price" class="form-label">Shipping Cost</label>
+                <input type="number" id="price" class="form-control" formControlName="price"
+                    placeholder="Enter shipping cost" />
+                <div class="text-danger small"
+                    *ngIf="shippingForm.get('price')?.invalid && shippingForm.get('price')?.touched">
+                    Cost must be 0 or more.
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <button type="submit" class="btn btn-primary w-100" [disabled]="shippingForm.invalid">
+                {{ shippingData ? 'Update' : 'Save' }} Shipping
+            </button>
+        </form>
+    </div>
+</div>

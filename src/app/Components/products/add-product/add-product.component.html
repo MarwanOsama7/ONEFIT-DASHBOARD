@@ -1,0 +1,184 @@
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Add Product</h1>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div *ngIf="!loading">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+            <!-- Product Details -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Product Information</h5>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Product Name</label>
+                        <input type="text" id="name" class="form-control" formControlName="name"
+                            placeholder="Enter product name"
+                            [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+                            required />
+                        <div class="invalid-feedback">Name is required.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" class="form-control" formControlName="description" rows="4"
+                            placeholder="Describe the product"
+                            [class.is-invalid]="productForm.get('description')?.invalid && productForm.get('description')?.touched"
+                            required></textarea>
+                        <div class="invalid-feedback">Description is required.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select id="gender" class="form-select" formControlName="gender" required>
+                            <option value="" disabled>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <div class="invalid-feedback">Gender is required.</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" id="price" class="form-control" formControlName="price"
+                                placeholder="Enter price"
+                                [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
+                                required />
+                            <div class="invalid-feedback">Price is required.</div>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                            <label for="discount" class="form-label">Discount (%)</label>
+                            <input type="number" id="discount" class="form-control" formControlName="discount"
+                                placeholder="Enter discount"
+                                [class.is-invalid]="productForm.get('discount')?.invalid && productForm.get('discount')?.touched"
+                                required />
+                            <div class="invalid-feedback">Discount is required.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Selection -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="categoryId" class="form-label">Category</label>
+                        <select id="categoryId" class="form-select" formControlName="categoryId"
+                            (change)="onCategoryChange($event)" required>
+                            <option value="" disabled>Select Category</option>
+                            <option *ngFor="let category of categories" [value]="category.categoryId">
+                                {{ category.categoryName }}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Category is required.</div>
+                    </div>
+
+                    <!-- Category Type Selection -->
+                    <div class="mb-3">
+                        <label for="categoryTypeId" class="form-label">Category Type</label>
+                        <select id="categoryTypeId" class="form-select" formControlName="categoryTypeId" required>
+                            <option value="" disabled>Select Category Type</option>
+                            <option *ngFor="let categoryType of filteredCategoryTypes"
+                                [value]="categoryType.categoryTypeId">
+                                {{ categoryType.categoryTypeName }}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Category Type is required.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Sizes -->
+            <div formArrayName="productSizes" class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Product Sizes</h5>
+                    <div *ngFor="let sizeGroup of productSizes.controls; let i = index" [formGroupName]="i"
+                        class="border p-3 rounded mb-3">
+                        <div class="mb-3">
+                            <label for="colorId-{{ i }}" class="form-label">Color</label>
+                            <select id="colorId-{{ i }}" class="form-select" formControlName="colorId" required>
+                                <option value="" disabled>Select Color</option>
+                                <option *ngFor="let color of colors" [value]="color[0]">{{ color[1] }}</option>
+                            </select>
+                            <div class="invalid-feedback">Color is required.</div>
+                        </div>
+
+                        <div formArrayName="sizes" class="mb-3">
+                            <h6>Sizes</h6>
+                            <div *ngFor="let sizeCtrl of getSizesFormArray(i).controls; let j = index"
+                                [formGroupName]="j">
+                                <div class="mb-3">
+                                    <label for="sizeId-{{ i }}-{{ j }}" class="form-label">Size</label>
+                                    <select id="sizeId-{{ i }}-{{ j }}" class="form-select" formControlName="sizeId"
+                                        required>
+                                        <option value="" disabled>Select Size</option>
+                                        <option *ngFor="let sizeOption of sizes" [value]="sizeOption[0]">{{
+                                            sizeOption[1] }}</option>
+                                    </select>
+                                    <div class="invalid-feedback">Size is required.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="stockQuantity-{{ i }}-{{ j }}" class="form-label">Stock Quantity</label>
+                                    <input type="number" id="stockQuantity-{{ i }}-{{ j }}" class="form-control"
+                                        formControlName="stockQuantity" required />
+                                    <div class="invalid-feedback">Stock Quantity is required.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removeProductSize(i)">Remove
+                            Size</button>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-primary me-2" (click)="addProductSize()">Add
+                        Size</button>
+                </div>
+            </div>
+
+            <!-- Color Images Section -->
+            <div formArrayName="colorImages" class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5>Color Images</h5>
+
+                    <!-- Loop through the color images form array -->
+                    <div *ngFor="let colorImage of colorImages.controls; let i = index" [formGroupName]="i"
+                        class="card p-3 mb-3 shadow-sm">
+
+                        <!-- Label and Input for Color Image -->
+                        <label for="colorImage-{{i}}" class="form-label">Upload Color Image</label>
+                        <input type="file" id="colorImage-{{i}}" class="form-control"
+                            (change)="onFilesChange($event, i)" multiple />
+
+                        <!-- List of selected files -->
+                        <ul class="list-group mt-2">
+                            <li *ngFor="let file of colorImage.get('imageFiles')?.value" class="list-group-item">
+                                {{ file.name }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Add New Color Image Button -->
+                    <button type="button" class="btn btn-outline-primary" (click)="addColorImage()">
+                        Add Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-outline-secondary">Back</button>
+                <div>
+                    <button type="submit" class="btn btn-success" [disabled]="loading">Save Product</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

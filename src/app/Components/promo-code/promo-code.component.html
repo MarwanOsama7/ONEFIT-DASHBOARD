@@ -1,0 +1,50 @@
+<div class="table-data" style="margin: 20px;">
+    <div class="order">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="font-weight-bold">Manage Promo Code</h3>
+
+            <button class="btn btn-gradient" [routerLink]="['/addpromocode']">Add Promo Code</button>
+        </div>
+
+        <table class="table table-bordered table-hover custom-table">
+            <thead class="thead-dark">
+                <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Promo Code</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Limit</th>
+                    <!-- <th scope="col" class="text-center">Actions</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let promo of promoCode?.content" class="clickable-row">
+                    <!-- <th scope="row">{{ category.id }}</th> -->
+                    <td class="text-center">{{ promo.promoCode }}</td>
+                    <td class="text-center">{{ promo.promoDiscount }}</td>
+                    <td class="text-center">{{ promo.usageLimit }}</td>
+                    <td class="text-center">
+                        <button class="danger-btn" (click)="deletePromoCode(promo.id)">
+                            Delete
+                        </button>
+                    </td>
+                    <!-- <td>{{ category.handle }}</td>/ -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example" class="mt-4">
+        <ul class="pagination pagination-black d-flex justify-content-center w-100">
+            <li class="page-item" (click)="previousPage()" [class.disabled]="!hasPreviousPage()">
+                <a class="page-link" aria-label="Previous">&laquo;</a>
+            </li>
+            <li class="page-item" *ngFor="let page of pageNumbers" (click)="changePage(page)"
+                [class.active]="page === currentPage + 1">
+                <a class="page-link">{{ page }}</a>
+            </li>
+            <li class="page-item" (click)="nextPage()" [class.disabled]="!hasNextPage()">
+                <a class="page-link" aria-label="Next">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+</div>

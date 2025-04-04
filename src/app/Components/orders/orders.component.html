@@ -1,0 +1,79 @@
+<div class="table-data" style="margin: 20px;">
+    <div class="order">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="font-weight-bold">Manage Orders</h3>
+            <form class="search-form">
+                <input type="text" placeholder="Search..." class="search-input" [(ngModel)]="searchValue"
+                    (input)="onSearchChange()" name="searchValue" />
+                <button type="button" class="search-button" (click)="onSearchButtonClick()">Search</button>
+            </form>
+
+            <!-- <button class="btn btn-gradient" (click)="moveToAddProduct()">Add Product</button> -->
+        </div>
+
+        <table class="table table-bordered table-hover custom-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">OrderCode</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">TotalPrice</th>
+                    <th scope="col">TotalQuantity</th>
+                    <th scope="col">City</th>
+                    <th scope="col">PromoCode</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders?.content" class="clickable-row">
+                    <!-- <th scope="row">{{ category.id }}</th> -->
+                    <td class="text-center">{{ order.requestOrderCode }}</td>
+                    <td class="text-center">{{order.createdDate}}</td>
+                    <td class="text-center">{{ order.createdTime }}</td>
+                    <td class="text-center">{{ order.requestOrderTotalPrice}} EGP</td>
+                    <td class="text-center">{{ order.requestOrderTotalQuantity }}</td>
+                    <td class="text-center">{{ order.clientcity }}</td>
+                    <td class="text-center">{{ order.promoCode }}</td>
+                    <td class="text-center">
+                        <span class="status" [ngClass]="{
+                            'pending': order.status == 0, 
+                            'process': order.status == -1,
+                            'completed': order.status == 1,
+                            'returned': order.status == 2,
+                        }">
+                            {{ order.status === 0 ? 'Pending'
+                            : order.status === -1 ? 'Processing'
+                            : order.status === 1 ? 'Completed'
+                            : order.status === 2 ? 'Returned'
+                            : 'Unknown' }}
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-info px-3 py-2 fw-bold shadow-sm rounded-3"
+                            (click)="showOrderDetails(order)">
+                            <i class="bi bi-eye"></i> View Details
+                        </button>
+                    </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example" class="mt-4">
+        <ul class="pagination pagination-black d-flex justify-content-center w-100">
+            <li class="page-item" (click)="previousPage()" [class.disabled]="!hasPreviousPage()">
+                <a class="page-link" aria-label="Previous">&laquo;</a>
+            </li>
+            <li class="page-item" *ngFor="let page of pageNumbers" (click)="changePage(page)"
+                [class.active]="page === currentPage + 1">
+                <a class="page-link">{{ page }}</a>
+            </li>
+            <li class="page-item" (click)="nextPage()" [class.disabled]="!hasNextPage()">
+                <a class="page-link" aria-label="Next">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+</div>

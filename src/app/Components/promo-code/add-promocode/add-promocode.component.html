@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h4 class="text-center mb-3">🎉 Add Promo Code</h4>
+
+        <form [formGroup]="promoCodeForm" (ngSubmit)="onSave()">
+            <!-- Promo Code -->
+            <div class="mb-3">
+                <label for="promoCode" class="form-label">Promo Code</label>
+                <input type="text" id="promoCode" class="form-control" formControlName="promoCode"
+                    placeholder="Enter promo code" />
+                <div class="text-danger small"
+                    *ngIf="promoCodeForm.get('promoCode')?.invalid && promoCodeForm.get('promoCode')?.touched">
+                    Promo Code is required (min 3 characters).
+                </div>
+            </div>
+
+            <!-- Discount -->
+            <div class="mb-3">
+                <label for="promoDiscount" class="form-label">Discount (%)</label>
+                <input type="number" id="promoDiscount" class="form-control" formControlName="promoDiscount"
+                    placeholder="Enter discount (1-100%)" />
+                <div class="text-danger small"
+                    *ngIf="promoCodeForm.get('promoDiscount')?.invalid && promoCodeForm.get('promoDiscount')?.touched">
+                    Must be between 1% and 100%.
+                </div>
+            </div>
+
+            <!-- Usage Limit -->
+            <div class="mb-3">
+                <label for="usageLimit" class="form-label">Usage Limit</label>
+                <input type="number" id="usageLimit" class="form-control" formControlName="usageLimit"
+                    placeholder="Enter usage limit" />
+                <div class="text-danger small"
+                    *ngIf="promoCodeForm.get('usageLimit')?.invalid && promoCodeForm.get('usageLimit')?.touched">
+                    Must be at least 1.
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <button type="submit" class="btn btn-primary w-100" [disabled]="promoCodeForm.invalid">
+                Save Promo Code
+            </button>
+        </form>
+    </div>
+</div>
